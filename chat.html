@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat App</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #contact-list {
+            width: 250px;
+            border-right: 1px solid #ccc;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+
+        #chat-window {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #messages {
+            flex-grow: 1;
+            padding: 10px;
+            overflow-y: auto;
+            display: flex; /* Add this line */
+            flex-direction: column; /* Add this line */
+            background: linear-gradient(135deg, #d4f1f9, #aee2ff, #91cfff);
+            position: relative; /* Needed for bubbles */
+            /*new*/
+            background-image: url('https://images.piclumen.com/normal/20250331/02/e28071363a744873a348cc5940b67271.webp');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        #message-input-area {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+
+        #message-input {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #send-button {
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        #chats {
+            margin-top: 10px;
+        }
+
+        .chat-item {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        
+        .chat-item:hover {
+          background-color: #e0e1e0;
+        }
+        
+        /* Change color when clicked */
+        #chat-item:focus-within {
+            background-color: #afb0ae;
+            color: white;
+        }
+
+        #add-friend-container {
+            display: flex;
+        }
+
+        #add-friend {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #add-friend-button {
+            padding: 8px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        #chat-header {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="contact-list">
+        <div id="add-friend-container">
+            <input type="text" id="add-friend" placeholder="Add Friend">
+            <button id="add-friend-button">Add</button>
+        </div>
+        <div id="chats">
+            </div>
+    </div>
+    <div id="chat-window">
+        <div id="chat-header">
+            <span id="chat-title"></span>
+        </div>
+        <div id="messages">
+            </div>
+        <div id="message-input-area">
+            <input type="text" id="message-input">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+    <script src="chat2.js"></script>
+    
+</body>
+</html>
