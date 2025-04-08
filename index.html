@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AN CHAT - Login & Register</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #d4f1f9, #aee2ff, #91cfff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      flex-direction: column; /* Allow vertical stacking */
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      width: 360px;
+      text-align: center;
+      position: relative;
+      border: 2px solid rgba(255, 165, 0, 0.1);
+      box-shadow: 0 4px 10px rgba(255, 165, 0, 0.05);
+      z-index: 5; /* Ensure it appears above bubbles */
+    }
+
+    .chat-icon {
+      font-size: 40px;
+      color: #4a90e2;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      font-weight: 600;
+      color: #1e3c72;
+    }
+
+    /* Chat-style input fields */
+    .input-container {
+      position: relative;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .input-container input {
+      width: 100%;
+      padding: 12px 45px 12px 15px; /* Right padding for icon */
+      border-radius: 20px;
+      border: none;
+      background: #f1f1f1;
+      font-size: 16px;
+      outline: none;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Chat bubble style */
+    .input-container::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -10px;
+      width: 0;
+      height: 0;
+      border: 10px solid transparent;
+      border-right-color: #f1f1f1;
+      border-left: 0;
+      margin-top: -10px;
+    }
+
+    /* Messaging-style icon inside input */
+    .input-container .msg-icon {
+      position: absolute;
+      right: 15px;
+      bottom: 50%;
+      transform: translateY(50%);
+      font-size: 18px;
+      color: #7d7d7d;
+      cursor: pointer;
+    }
+
+    .form-container button {
+      width: 100%;
+      padding: 12px;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .form-container button:hover {
+      background: #357ab7;
+    }
+
+    .toggle-link {
+      display: block;
+      margin-top: 15px;
+      color: #4a90e2;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .toggle-link:hover {
+      color: #357ab7;
+    }
+
+    .maintenance {
+      text-align: center;
+      margin-top: 20px; /* Space between form and message */
+      z-index: 10; /* Ensure it appears above other content */
+    }
+
+    /* Background animated bubbles */
+    .bubble {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: moveRandom 25s infinite linear alternate;
+    }
+
+    @keyframes moveRandom {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(100px, -120px); }
+      50% { transform: translate(-150px, 100px); }
+      75% { transform: translate(120px, -100px); }
+      100% { transform: translate(0, 0); }
+  }
+  </style>
+</head>
+<body>
+
+  <!-- Main Content -->
+  <div class="form-container" id="authForm">
+    <div class="chat-icon">👤</div>
+    <h2 id="formTitle">Login</h2>
+    
+    <div class="input-container">
+      <input type="text" id="username" placeholder="Enter your username" required />
+      <span class="msg-icon">🆔</span>
+    </div>
+
+    <div class="input-container">
+      <input type="password" id="password" placeholder="Enter your password" required />
+      <span class="msg-icon">🔒</span>
+    </div>
+
+    <button onclick="handleSubmit()">Login</button>
+    <span class="toggle-link" onclick="toggleForm()">Don't have an account? Register</span>
+  </div>
+
+  <!-- Maintenance Message -->
+  <div class="maintenance" id="maintenanceMessage" style="display: none;">
+    <h1 style="text-align:center; font-family:sans-serif; color:red;">⚠ Website Under Maintenance ⚠</h1>
+    <p style="text-align:center; font-size:18px; color:#333;">We are making some improvements. Please check back later.</p>
+  </div>
+
+  <script>
+    // Maintenance Mode Toggle
+    const maintenanceMode = false; // Set to true to enable maintenance mode
+
+    if (maintenanceMode) {
+      document.getElementById('authForm').style.display = 'none';
+      document.getElementById('maintenanceMessage').style.display = 'block';
+    } else {
+      // Create background animated bubbles
+      for (let i = 0; i < 15; i++) {
+        let bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        let size = Math.random() * 80 + 40;
+        bubble.style.width = size + 'px';
+        bubble.style.height = size + 'px';
+        bubble.style.top = Math.random() * 100 + 'vh';
+        bubble.style.left = Math.random() * 100 + 'vw';
+        document.body.appendChild(bubble);
+      }
+    }
+
+    const sheetUrl = 'https://script.google.com/macros/s/AKfycbwO46xpG7R69knQS1IcWsR7xu85zhMH1_XbJNJF9BX92uqX4yPgu8-VpzdFCnGIKplc/exec'; // Replace with your Google Apps Script URL
+
+function handleSubmit() {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  if (document.getElementById('formTitle').textContent === 'Login') {
+    login(username, password);
+  } else {
+    register(username, password);
+  }
+}
+
+async function login(username, password) {
+  const response = await fetch(sheetUrl, {
+    method: 'POST',
+    body: new URLSearchParams({
+      action: 'login',
+      username: username,
+      password: password,
+    }),
+  });
+  const data = await response.json();
+
+  if (data.success) {
+    alert(data.message);
+    window.location.href = 'chat.html'; // Redirect to chat page
+    localStorage.setItem('currentUser', username); //Store the user name.
+    localStorage.setItem('loginTimestamp', Date.now()); // Store login time
+  } else {
+    alert(data.message);
+  }
+}
+
+async function register(username, password) {
+  const response = await fetch(sheetUrl, {
+    method: 'POST',
+    body: new URLSearchParams({
+      action: 'register',
+      username: username,
+      password: password,
+    }),
+  });
+  const data = await response.json();
+
+  if (data.success) {
+    alert(data.message);
+    toggleForm();
+  } else {
+    alert(data.message);
+  }
+}
+
+function toggleForm() {
+  const formTitle = document.getElementById('formTitle');
+  const toggleLink = document.querySelector('.toggle-link');
+  const button = document.querySelector('button');
+  if (formTitle.textContent === 'Login') {
+    formTitle.textContent = 'Register';
+    button.textContent = 'Register';
+    toggleLink.textContent = 'Already have an account? Login';
+  } else {
+    formTitle.textContent = 'Login';
+    button.textContent = 'Login';
+    toggleLink.textContent = 'Don\'t have an account? Register';
+  }
+}
+  </script>
+</body>
+</html>
